@@ -25,17 +25,32 @@ public class MyReceiver {
 			
 			Queue queue = (Queue) applicationContext.getBean("queue");
 			
-			// Create a connection. See https://docs.oracle.com/javaee/7/api/javax/jms/package-summary.html
-		   QueueConnection connection = factory.createQueueConnection();
-           // Open a session
-           QueueSession session = connection.createQueueSession(false, QueueSession.AUTO_ACKNOWLEDGE);
-           // start the connection
-           connection.start();
-           // Create a receive
-           QueueReceiver receiver = session.createReceiver(queue);
-           // Receive the message
-           Message message = receiver.receive();
-           System.out.println(message);
+			/* Create a connection. See https://docs.oracle.com/javaee/7/api/javax/jms/package-summary.html
+			 * 
+			 * A QueueConnection object is an active connection to a point-to-point JMS provider.
+			 */
+			QueueConnection connection = factory.createQueueConnection();
+			/* Open a session
+			 * 
+			 * A QueueSession object provides methods for creating QueueReceiver, QueueSender, QueueBrowser, and TemporaryQueue objects.
+			 */
+			QueueSession session = connection.createQueueSession(false, QueueSession.AUTO_ACKNOWLEDGE);
+			/* Start the connection
+			 * 
+			 * A Connection object is a client's active connection to its JMS provider. It typically allocates provider resources outside the Java virtual machine (JVM).
+			 */
+			connection.start();
+			/* Create a receive
+			 * 
+			 * A client uses a QueueReceiver object to receive messages that have been delivered to a queue.
+			 */
+			QueueReceiver receiver = session.createReceiver(queue);
+			/*Receive the message
+			 * 
+			 * The Message interface is the root interface of all JMS messages.
+			 */
+			Message message = receiver.receive();
+			System.out.println(message);
 
 		}catch(Exception e){
 			e.printStackTrace();
