@@ -24,14 +24,21 @@ public class MySender {
 			
 			Queue queue = (Queue) applicationContext.getBean("queue");
 			
-			// Create a connection. See https://docs.oracle.com/javaee/7/api/javax/jms/package-summary.html	
-			// Open a session
-			// Start the connection
-			// Create a sender		
-			// Create a message
-			// Send the message
-			// Close the session			
-			// Close the connection
+			QueueConnection connection = factory.createQueueConnection();
+	        
+	           QueueSession session = connection.createQueueSession(false, QueueSession.AUTO_ACKNOWLEDGE);
+	           
+	           connection.start();
+	           
+	           QueueSender sender = session.createSender(queue);
+	           
+	           Message message = session.createTextMessage("this OIS MY TEST");
+	           
+	           sender.send(message);
+	           
+	           session.close();
+	           
+	           connection.close();
 			
 		}catch(Exception e){
 			e.printStackTrace();
