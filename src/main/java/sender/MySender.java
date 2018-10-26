@@ -18,10 +18,8 @@ public class MySender {
 	public static void main(String[] args) {
 		
 		try{
-			
 			ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContextJMS.xml");
 			QueueConnectionFactory factory = (QueueConnectionFactory) applicationContext.getBean("connectionFactory");
-			
 			Queue queue = (Queue) applicationContext.getBean("queue");
 			
 			QueueConnection connection = factory.createQueueConnection();
@@ -32,7 +30,8 @@ public class MySender {
 	           
 	           QueueSender sender = session.createSender(queue);
 	           
-	           Message message = session.createTextMessage("this OIS MY TEST");
+	           Message message = session.createTextMessage("Hello Tim");
+	           System.out.println(message);
 	           
 	           sender.send(message);
 	           
